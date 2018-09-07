@@ -1,0 +1,41 @@
+language: c
+
+before_install:
+  - sudo apt-get install -y splint
+
+script:
+  - cd q2
+  - mkdir -p bin
+  - mkdir -p obj
+  - splint ./src/solution.c -I./include
+  - make build
+  - make test
+  - cd ..
+  - cd q3
+  - mkdir -p bin
+  - mkdir -p obj
+  - splint ./src/solution.c -I./include
+  - make build
+  - make test
+  - cd ..
+  - cd q4
+  - mkdir -p bin
+  - mkdir -p obj
+  - splint ./src/solution.c -I./include
+  - make build
+  - make test
+  - cd ..
+  - cd q5
+  - mkdir -p bin
+  - mkdir -p obj
+  - splint ./src/solution.c -I./include
+  - make build
+  - make test
+  - cd ..
+  - cd q6
+  - mkdir -p bin
+  - mkdir -p obj
+  - splint ./src/solution.c -I./include
+  - make build
+  - make test
+  - cd ..
