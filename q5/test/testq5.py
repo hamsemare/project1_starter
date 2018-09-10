@@ -1,13 +1,14 @@
 '''
-Checks the output of the solution for Q2
+Checks the output of the solution for Q5
 '''
 
 import sys
+import subprocess
 
-lines = []
-result_file = open(sys.argv[1], 'r')
-for line in result_file:
-	lines.append(line.strip())
+print "testing Q5"
+
+output=subprocess.check_output(["./bin/solution.out", "../q1/edmonton.db", "./test/nodes.tsv"])
+lines = output.strip().split('\n')
 
 if len(lines) > 1 and lines[0] != 'error':
 	print "====> ERROR: the output has more lines than expected"

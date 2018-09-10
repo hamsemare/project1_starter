@@ -53,8 +53,8 @@ build: directories $(OBJ)
 
 test: build
 	@echo "\nTesting ... "
-	@for test in `find ${TESTDIR} -name 'test*.sh'`; do \
-		$$test ${MAIN_FILE}; \
+	@for test in `find ${TESTDIR} -name 'test*.py'`; do \
+		python $$test ; \
 	done
 
 clean:

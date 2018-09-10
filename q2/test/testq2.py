@@ -3,11 +3,12 @@ Checks the output of the solution for Q2
 '''
 
 import sys
+import subprocess
 
-lines = []
-result_file = open(sys.argv[1], 'r')
-for line in result_file:
-	lines.append(line.strip())
+print "testing Q2"
+
+output=subprocess.check_output(["./bin/solution.out", "../q1/edmonton.db", "651244271", "664182573"])
+lines = output.strip().split('\n')
 
 if len(lines) > 1:
 	print "====> ERROR: the output has more lines than expected"
