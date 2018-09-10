@@ -1,3 +1,4 @@
 *.o
+*.out
 q1/edmonton.db
 q1/*.osm
