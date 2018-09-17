@@ -10,12 +10,12 @@ BINDIR=bin
 # test cases
 TESTDIR=./test
 #SQLite source
-SQLITE=../sqlite
+SQLITE=../sqlite3
 
 # gcc configuration
 CC = gcc
 CFLAGS = -I./$(IDIR) -I../$(SQLITE)
-LIBS = -lm
+LIBS = -lm -lpthread -ldl
 
 .PHONY: directories clean
 
@@ -32,6 +32,11 @@ OBJ = $(patsubst %.o,$(ODIR)/%.o,$(_OBJ))
 TESTS = t1.txt
 
 # main compilation rule
+$(SQLITE)/sqlite3.o: $(SQLITE)/sqlite3.c $(SQLITE)/sqlite3.h
+	@echo "compiling: $(CC) -c -o $@ $< $(SQLITE)/sqlite3.c $(CFLAGS)" 
+	$(CC) -c $(SQLITE)/sqlite3.c -o $(SQLITE)/sqlite3.o $(CFLAGS)
+
+
 $(ODIR)/%.o: $(SRCDIR)/%.c $(IDIR)/%.h
 	@echo "compiling: $(CC) -c -o $@ $<  $(SQLITE)/sqlite3.c $(CFLAGS)" 
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -47,9 +52,9 @@ ${BINDIR}:
 	mkdir -p $(BINDIR)
 
 
-build: directories $(OBJ)
+build: directories $(OBJ) $(SQLITE)/sqlite3.o
 	@echo "\nBuilding ... "
-	$(CC) -o $(BINDIR)/$(MAIN_FILE).out $(OBJ) $(CFLAGS) $(LIBS)
+	$(CC) -o $(BINDIR)/$(MAIN_FILE).out $(OBJ) $(SQLITE)/sqlite3.o $(CFLAGS) $(LIBS)
 
 test: build
 	@echo "\nTesting ... "
@@ -59,7 +64,7 @@ test: build
 
 clean:
 	@echo "Removing object/binary files: rm -f $(ODIR)/*.o *~ core $(BINDIR)/$(MAIN_FILE).out"
-	rm -f $(ODIR)/*.o *~ core $(BINDIR)/$(MAIN_FILE).out
+	rm -f $(ODIR)/*.o $(SQLITE)/sqlite3.o *~ core $(BINDIR)/$(MAIN_FILE).out
 	@echo "Removing output of tests: rm -f $(TESTDIR)/*output.txt"
 	rm -f $(TESTDIR)/*output.txt
 	@echo "Removing bin and obj directories"
