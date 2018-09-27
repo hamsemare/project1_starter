@@ -4,6 +4,9 @@ before_install:
   - sudo apt-get install -y splint
 
 script:
+  - cd q1
+  - mv quad_cs.db edmonton.db
+  - cd ..
   - cd q2
   - mkdir -p bin
   - mkdir -p obj
